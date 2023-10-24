@@ -1,4 +1,3 @@
-
 import Card from './Card';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -6,10 +5,7 @@ import { RootState } from '../redux/store';
 export default function ProductList() {
   const { products } = useSelector((state: RootState) => state.products)
 
-  console.log(products, 'productsRedux')
-
-
-
+  // console.log(products, 'productsRedux')
 
   return (
     <>
@@ -26,7 +22,7 @@ export default function ProductList() {
             />
           ))}
       </div>
-      <h1>หน้าลิสโปรดักก</h1>
+
     </>
 
   );

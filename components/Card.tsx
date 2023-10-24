@@ -63,8 +63,8 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ productImg, productName, id, productDetail }) => {
   // const navigate = useNavigate();
 
-  const imageUrl =
-    productImg instanceof File ? URL.createObjectURL(productImg) : (productImg as string);
+  // const imageUrl =
+  //   productImg instanceof File ? URL.createObjectURL(productImg) : (productImg as string);
 
   return (
     <div
