@@ -61,7 +61,7 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ productImg, productName, id, productDetail }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const imageUrl =
     productImg instanceof File ? URL.createObjectURL(productImg) : (productImg as string);
@@ -70,12 +70,12 @@ const Card: React.FC<CardProps> = ({ productImg, productName, id, productDetail 
     <div
       className="w-full h-[200px] bg-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer m-2"
       role="button"
-      onClick={() => {
-        navigate(`/product/${productName}`);
-      }}
+    // onClick={() => {
+    //   navigate(`/product/${productName}`);
+    // }}
     >
       <div className="flex w-full h-full">
-        {imageUrl ? (
+        {/* {imageUrl ? (
           <img
             className="w-1/2  object-cover overflow-hidden"
             src={imageUrl}
@@ -87,7 +87,7 @@ const Card: React.FC<CardProps> = ({ productImg, productName, id, productDetail 
             src={defaultImg}
             alt={productName}
           />
-        )}
+        )} */}
 
         <div className="w-1/2 flex flex-col items-start gap-[1px] p-[8px] overflow-hidden justify-items-center">
           <div className="text-xl font-bold text-blue-500 overflow-hidden w-[95%]">

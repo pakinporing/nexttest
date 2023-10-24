@@ -1,4 +1,4 @@
-import useDataProduct from '../hooks/useDataProduct';
+
 import Card from './Card';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -8,15 +8,7 @@ export default function ProductList() {
 
   console.log(products, 'productsRedux')
 
-  // const dataProduct = useDataProduct();
-  // if (!dataProduct) {
-  //   return null;
-  // }
 
-  // const { product, setProduct } = dataProduct;
-
-  // console.log(`หน้าโปรดักลิส ${dataProduct}`)
-  // console.log(`หน้าโปรดักลิส1 ${product}`)
 
 
   return (
