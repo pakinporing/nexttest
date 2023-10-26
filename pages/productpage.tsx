@@ -11,9 +11,11 @@ import defaultImg from '../assets/x_letter_letters_alphabet_icon_209006.png';
 export default function ProductPage() {
   const { products } = useSelector((state: RootState) => state.products)
   const router = useRouter();
-  const { keyName } = router.query;
+  // const { keyName } = router.query;
+  const { name } = router.query;
 
-  const foundProduct = products.find((el) => el.productName === keyName);
+  // const foundProduct = products.find((el) => el.productName === keyName);
+  const foundProduct = products.find((el) => el.productName === name);
 
   const handleGoBack = () => {
     router.back()

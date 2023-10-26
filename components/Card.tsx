@@ -24,7 +24,13 @@ const Card: React.FC<CardProps> = ({ productImg, productName, id, productDetail 
       role="button"
 
     >
-      <Link href={`/productpage?keyName=${productName}`} as={`/productpage?keyName=${productName}`}>
+      {/* <Link href={`/productpage?keyName=${productName}`} as={`/productpage?keyName=${productName}`}> */}
+      <Link
+        href={{
+          pathname: '/productpage',
+          query: { name: `${productName}` },
+        }}
+      >
         <div className="flex w-full h-full">
           {productImg ? (
             <Image
