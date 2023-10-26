@@ -1,57 +1,74 @@
 import React, { useState, ChangeEvent } from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
+import { addProducts } from '../redux/productsSlice';
+
 export default function AddProduct() {
+  const { products } = useSelector((state: RootState) => state.products)
+  const dispatch = useDispatch();
 
   interface FormData {
     productName: string;
     productDetail: string;
     price: string;
-    productImg: File | null;
+    productImg: any
   }
 
   const [formData, setFormData] = useState<FormData>({
     productName: '',
     productDetail: '',
     price: '',
-    productImg: null
+    productImg: ''
   });
 
 
+  const handleClickSave = () => {
+    const newProduct = {
+      productName: formData.productName,
+      productDetail: formData.productDetail,
+      price: parseInt(formData.price),
+      productImg: formData.productImg
+    };
 
+    const newP: any = [...products, newProduct];
 
+    dispatch(addProducts(newP))
 
+    setFormData({
+      productName: '',
+      productDetail: '',
+      price: '',
+      productImg: ''
+    });
 
-  // const handleClickSave = () => {
+    const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+    if (modal) {
+      modal.close();
+    }
 
-  //  const newProduct = {
-  //       productName: formData.productName,
-  //       productDetail: formData.productDetail,
-  //       price: formData.price,
-  //       productImg: formData.productImg // เพิ่ม productImg ลงในรายการผลิตภัณฑ์
-  //     };
-
-  //     const newP: any = [...product, newProduct];
-
-  //     setProduct(newP);
-
-  //     setFormData({
-  //       productName: '',
-  //       productDetail: '',
-  //       price: '',
-  //       productImg: null // รีเซ็ต productImg เมื่อบันทึกเสร็จ
-  //     });
-
-  //     const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-  //     if (modal) {
-  //       modal.close();
-  //     }
-  //   }
-  // }
+  }
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files ? e.target.files[0] : null;
-    setFormData({ ...formData, productImg: imageFile });
+
+    if (imageFile) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        // รับข้อมูล Base64 จาก reader.result
+        const base64Data = event.target!.result;
+
+        console.log(base64Data, 'base64Dataaaaaaaaaaa')
+
+        setFormData({ ...formData, productImg: base64Data });
+      };
+
+      // อ่านไฟล์เป็น Base64
+      reader.readAsDataURL(imageFile);
+    }
   }
+
 
 
   return (
@@ -149,7 +166,7 @@ export default function AddProduct() {
                 className="btn btn-success"
                 role="button"
                 type="button"
-              // onClick={handleClickSave}
+                onClick={handleClickSave}
               >
                 SAVE
               </button>

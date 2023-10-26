@@ -3,9 +3,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 export default function ProductList() {
+
+
+
   const { products } = useSelector((state: RootState) => state.products)
 
-  // console.log(products, 'productsRedux')
+  // console.log(products, 'productsList')
 
   return (
     <>

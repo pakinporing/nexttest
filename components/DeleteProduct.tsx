@@ -1,33 +1,39 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
+import { addProducts } from "../redux/productsSlice";
 
 
 export default function DeleteProduct() {
+    const { products } = useSelector((state: RootState) => state.products)
+    const dispatch = useDispatch();
 
     const [dataDelete, setDataDelete] = useState<string>('');
 
+    const deleteProductByProductName = (productNameToDelete: string): void => {
+        const productCheck = products.findIndex((el) => el.productName === productNameToDelete)
+
+        if (productCheck == -1) {
+
+            alert('ไม่พบสินค้าที่ต้องการลบ');
+
+        } else {
+            const productDataUpdated = products.filter((el: any) => el.productName !== productNameToDelete);
 
 
 
+            dispatch(addProducts(productDataUpdated))
 
-    //   const deleteProductByProductName = (productNameToDelete: string): void => {
-    //     if (dataProductContext) {
-    //       const { product, setProduct } = dataProductContext;
+            setDataDelete('');
 
-    //       const productDataUpdated = product.filter((el: any) => el.productName !== productNameToDelete);
+            const modal = document.getElementById('my_modal_4') as HTMLDialogElement;
+            if (modal) {
+                modal.close();
+            }
 
-    //       setProduct(productDataUpdated);
+        }
 
-    //       setDataDelete('');
-
-    //       const modal = document.getElementById('my_modal_4') as HTMLDialogElement;
-    //       if (modal) {
-    //         modal.close();
-    //       }
-    //     }
-    //   }
-
-
-
+    }
 
     return (
         <div>
@@ -74,11 +80,11 @@ export default function DeleteProduct() {
                                     className="btn btn-error"
                                     role="button"
                                     type="button"
-                                //   onClick={() => {
-                                //     if (dataDelete !== '') {
-                                //       deleteProductByProductName(dataDelete);
-                                //     }
-                                //   }}
+                                    onClick={() => {
+                                        if (dataDelete !== '') {
+                                            deleteProductByProductName(dataDelete);
+                                        }
+                                    }}
                                 >
                                     DELETE
                                 </button>

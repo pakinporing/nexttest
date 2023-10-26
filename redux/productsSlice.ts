@@ -3,12 +3,12 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import dataProduct from '../assets/data/productData';
 
 export interface ProductState {
-    id: number;
-    productName: string;
+    id: number
+    productName: string
     productDetail:
-    string;
-    productImg: string | File
-    price: number;
+    string
+    productImg: any;
+    price: number
 }
 
 export interface ProductSlice {
@@ -23,11 +23,13 @@ export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-
+        addProducts: (state, action: PayloadAction<ProductState[]>) => {
+            state.products = action.payload
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { } = productSlice.actions
+export const { addProducts } = productSlice.actions
 
 export default productSlice.reducer
