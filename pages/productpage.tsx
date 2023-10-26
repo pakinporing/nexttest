@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 
 
-
-
 import EditProduct from '../components/EditProduct';
 import Image from 'next/image';
 import defaultImg from '../assets/x_letter_letters_alphabet_icon_209006.png';
@@ -14,9 +12,6 @@ export default function ProductPage() {
   const { products } = useSelector((state: RootState) => state.products)
   const router = useRouter();
   const { keyName } = router.query;
-
-
-
 
   const foundProduct = products.find((el) => el.productName === keyName);
 
@@ -63,7 +58,6 @@ export default function ProductPage() {
           >
             ย้อนกลับ
           </button>
-
           <EditProduct />
         </div>
       </div>

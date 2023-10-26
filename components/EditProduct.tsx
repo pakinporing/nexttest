@@ -1,8 +1,5 @@
-
-
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router'
-
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { addProducts } from '../redux/productsSlice';
@@ -40,10 +37,6 @@ export default function EditProduct() {
         }
     }, [foundProduct]);
 
-
-
-
-
     const handleSave = () => {
         if (foundProduct) {
             const productIndex = products.findIndex(
@@ -60,6 +53,7 @@ export default function EditProduct() {
                 };
 
                 const updatedProducts = [...products];
+
                 updatedProducts[productIndex] = updatedProduct;
 
 
@@ -69,7 +63,6 @@ export default function EditProduct() {
             }
         }
     };
-
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const imageFile = e.target.files ? e.target.files[0] : null;

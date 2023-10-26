@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { addProducts } from '../redux/productsSlice';
@@ -56,7 +55,7 @@ export default function AddProduct() {
       const reader = new FileReader();
 
       reader.onload = (event) => {
-        // รับข้อมูล Base64 จาก reader.result
+
         const base64Data = event.target!.result;
 
         console.log(base64Data, 'base64Dataaaaaaaaaaa')
@@ -64,12 +63,10 @@ export default function AddProduct() {
         setFormData({ ...formData, productImg: base64Data });
       };
 
-      // อ่านไฟล์เป็น Base64
+
       reader.readAsDataURL(imageFile);
     }
   }
-
-
 
   return (
     <div>
