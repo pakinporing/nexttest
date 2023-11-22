@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/store';
-import { addProducts } from '../redux/productsSlice';
+import { RootState } from '../../redux/store';
+import { addProducts } from '../../redux/productsSlice';
 
-export default function AddProduct() {
+export default function AddProductDialog() {
   const { products } = useSelector((state: RootState) => state.products)
   const dispatch = useDispatch();
 

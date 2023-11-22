@@ -1,16 +1,17 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/store';
-import { addProducts } from '../redux/productsSlice';
+import { RootState } from '../../redux/store';
+import { addProducts } from '../../redux/productsSlice';
+import Link from 'next/link';
 
-export default function EditProduct() {
+export default function EditProductDialog() {
     const { products } = useSelector((state: RootState) => state.products)
     const dispatch = useDispatch();
     const router = useRouter();
-    const { keyName } = router.query;
+    const { name } = router.query;
 
-    const foundProduct = products.find((el) => el.productName === keyName);
+    const foundProduct = products.find((el) => el.productName === name);
 
     interface FormData {
         productName: string;
@@ -38,12 +39,15 @@ export default function EditProduct() {
     }, [foundProduct]);
 
     const handleSave = () => {
+
         if (foundProduct) {
+
             const productIndex = products.findIndex(
                 (el) => el.productName === foundProduct.productName
             );
 
             if (productIndex !== -1) {
+
                 const updatedProduct = {
                     ...foundProduct,
                     productName: formData.productName,
@@ -107,12 +111,19 @@ export default function EditProduct() {
                                 <label className="label">
                                     <span className="label-text">เลือกรูปภาพ</span>
                                 </label>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                    className="file-input file-input-bordered w-full max-w-xs"
-                                />
+                                <Link
+                                    href={{
+                                        pathname: '/Home',
+                                        query: { name: `${name}` },
+                                    }}
+                                >
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        // onChange={handleImageChange}
+                                        className="file-input file-input-bordered w-full max-w-xs"
+                                    />
+                                </Link>
                             </div>
 
                             <div className="form-control w-full ">

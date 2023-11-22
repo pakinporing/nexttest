@@ -1,8 +1,5 @@
-
-
 import React from 'react';
 import Link from 'next/link';
-
 import Image from 'next/image';
 import defaultImg from '../assets/x_letter_letters_alphabet_icon_209006.png';
 

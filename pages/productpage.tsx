@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 
 
-import EditProduct from '../components/EditProduct';
+import EditProduct from '../components/dialogs/EditProductDialog';
 import Image from 'next/image';
 import defaultImg from '../assets/x_letter_letters_alphabet_icon_209006.png';
 

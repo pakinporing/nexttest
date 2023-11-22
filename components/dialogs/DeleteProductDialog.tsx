@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/store';
-import { addProducts } from "../redux/productsSlice";
+import { RootState } from '../../redux/store';
+import { addProducts } from "../../redux/productsSlice";
 
 
-export default function DeleteProduct() {
+export default function DeleteProductDialog() {
     const { products } = useSelector((state: RootState) => state.products)
     const dispatch = useDispatch();
 
