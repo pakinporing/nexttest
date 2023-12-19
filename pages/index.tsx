@@ -5,9 +5,6 @@ import AddProduct from '../components/dialogs/AddProductDialog';
 import DeleteProduct from '../components/dialogs/DeleteProductDialog';
 import ProductList from '../components/ProductList';
 
-import img1 from '../assets/nokia.jpg'
-import img2 from '../assets/samsung.jpg'
-import Home from './Home';
 
 
 
@@ -31,12 +28,6 @@ export default function HomePage() {
         </div>
         <ProductList />
       </div>
-
-      {/* <Home /> */}
-
-
-
-
     </>
   );
 }

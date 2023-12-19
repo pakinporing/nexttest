@@ -5,6 +5,28 @@ import { RootState } from '../../redux/store';
 import { addProducts } from '../../redux/productsSlice';
 import Link from 'next/link';
 
+
+// --------------------------------------------------------------------------------------------------------
+// ลบในนนี้
+import AvatarEditor from 'react-avatar-editor';
+import Dropzone, { FileRejection } from 'react-dropzone';
+import Image from 'next/image';
+
+
+
+const dropzoneStyle: React.CSSProperties = {
+    width: '200px',
+    height: '200px',
+    border: '2px dashed #cccccc',
+    borderRadius: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+};
+// ลบในนนี้
+// ---------------------------------------------------------------------------------------------------------
+
 export default function EditProductDialog() {
     const { products } = useSelector((state: RootState) => state.products)
     const dispatch = useDispatch();
@@ -12,6 +34,94 @@ export default function EditProductDialog() {
     const { name } = router.query;
 
     const foundProduct = products.find((el) => el.productName === name);
+
+
+
+    // -----------------------------------------------------------------------------------------------------------------------
+    // ลบในนนี้
+
+
+    const [changeModal, setChangeModal] = useState<boolean>(true);
+    const [hideStatus, sethideStatus] = useState<any>(true);
+    const [image, setImage] = useState<File | null>(null);
+    const [editor, setEditor] = useState<any>(null);
+    const [scale, setScale] = useState<number>(1);
+
+    const handleDrop = (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
+        if (acceptedFiles.length > 0) {
+            const file = acceptedFiles[0];
+            setImage(file);
+            sethideStatus(false)
+        }
+    };
+
+    const handleScaleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newScale = parseFloat(e.target.value);
+        setScale(newScale);
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ลบในนนี้
+    // -----------------------------------------------------------------------------------------------------
+
 
     interface FormData {
         productName: string;
@@ -69,6 +179,8 @@ export default function EditProductDialog() {
     };
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+
         const imageFile = e.target.files ? e.target.files[0] : null;
 
         if (imageFile) {
@@ -85,18 +197,36 @@ export default function EditProductDialog() {
         }
     }
 
+    const handleSave2 = () => {
+        if (editor && image) {
+            const canvas = editor.getImageScaledToCanvas();
+            const croppedImage = canvas.toDataURL();
+            // Now you can save the cropped image or send it to your server
+            console.log(croppedImage);
+            setFormData({ ...formData, productImg: croppedImage });
+        }
+    };
+
+    const handleClick = () => {
+        setChangeModal(true)
+        sethideStatus(true)
+    }
+
+
     return (
-        <div> <button
-            className="btn btn-warning"
-            onClick={() => {
-                const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-                if (modal) {
-                    modal.showModal();
-                }
-            }}
-        >
-            แก้ไข
-        </button>
+
+        <div>
+            <button
+                className="btn btn-warning"
+                onClick={() => {
+                    const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+                    if (modal) {
+                        modal.showModal();
+                    }
+                }}
+            >
+                แก้ไข
+            </button>
             <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                     <form method="dialog">
@@ -104,92 +234,171 @@ export default function EditProductDialog() {
                             ✕
                         </button>
                     </form>
+
                     <h3 className="font-bold text-lg">แก้ไข!</h3>
-                    <div className="bg-[#ffffff] w-full h-1/2 rounded-[30px] mx-auto p-[20px]">
-                        <form className="flex flex-col gap-3 items-stretch">
-                            <div className="form-control w-full max-w-xs">
-                                <label className="label">
-                                    <span className="label-text">เลือกรูปภาพ</span>
-                                </label>
-                                <Link
-                                    href={{
-                                        pathname: '/Home',
-                                        query: { name: `${name}` },
-                                    }}
-                                >
-                                    <input
+
+
+
+                    {changeModal ? (
+
+                        <div className="bg-[#ffffff] w-full h-1/2 rounded-[30px] mx-auto p-[20px]">
+                            <form className="flex flex-col gap-3 items-stretch">
+                                <div className="form-control w-full max-w-xs">
+                                    <label className="label">
+                                        <span className="label-text">เลือกรูปภาพ</span>
+                                    </label>
+
+                                    {/* <input
                                         type="file"
                                         accept="image/*"
-                                        // onChange={handleImageChange}
+                                        onChange={handleImageChange}
                                         className="file-input file-input-bordered w-full max-w-xs"
+                                    /> */}
+
+                                    <button
+                                        className="btn btn-success"
+                                        role="button"
+                                        type="button"
+                                        onClick={() => setChangeModal(false)}
+                                    >
+                                        เลือกรูปภาพ
+                                    </button>
+
+                                </div>
+
+                                <div className="form-control w-full ">
+                                    <label className="label">
+                                        <span className="label-text">แก้ไขชื่อสินค้า</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="แก้ชื่อสินค้า"
+                                        value={formData.productName}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                productName: e.target.value
+                                            })
+                                        }
+                                        className="input input-bordered w-full"
                                     />
-                                </Link>
-                            </div>
+                                </div>
 
-                            <div className="form-control w-full ">
-                                <label className="label">
-                                    <span className="label-text">แก้ไขชื่อสินค้า</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="แก้ชื่อสินค้า"
-                                    value={formData.productName}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            productName: e.target.value
-                                        })
-                                    }
-                                    className="input input-bordered w-full"
-                                />
-                            </div>
+                                <div className="form-control w-full ">
+                                    <label className="label">
+                                        <span className="label-text">แก้ไขราคา</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="แก้ราคาสินค้า"
+                                        value={formData.price}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                price: e.target.value
+                                            })
+                                        }
+                                        className="input input-bordered w-full"
+                                    />
+                                </div>
 
-                            <div className="form-control w-full ">
-                                <label className="label">
-                                    <span className="label-text">แก้ไขราคา</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="แก้ราคาสินค้า"
-                                    value={formData.price}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            price: e.target.value
-                                        })
-                                    }
-                                    className="input input-bordered w-full"
-                                />
-                            </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">แก้ไขคำอธิบาย</span>
+                                    </label>
+                                    <textarea
+                                        className="textarea textarea-bordered h-24 resize-none"
+                                        placeholder="แก้ไขคำอธิบายของคุณ"
+                                        value={formData.productDetail}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                productDetail: e.target.value
+                                            })
+                                        }
+                                    ></textarea>
+                                </div>
 
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">แก้ไขคำอธิบาย</span>
-                                </label>
-                                <textarea
-                                    className="textarea textarea-bordered h-24 resize-none"
-                                    placeholder="แก้ไขคำอธิบายของคุณ"
-                                    value={formData.productDetail}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            productDetail: e.target.value
-                                        })
-                                    }
-                                ></textarea>
-                            </div>
+                                <button
+                                    className="btn btn-success"
+                                    role="button"
+                                    type="button"
+                                    onClick={handleSave}
+                                >
+                                    SAVE
+                                </button>
+                            </form>
+                        </div>
+                    ) : (
 
-                            <button
-                                className="btn btn-success"
+                        <div className='flex items-center justify-space-evenly flex-col gap-3'>
+                            <Image
+                                className="w-1/2  object-cover overflow-hidden"
+                                src={formData.productImg}
+                                alt='name'
+                                width={200}
+                                height={200}
+                            />
+                            <Dropzone onDrop={handleDrop}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div {...getRootProps()} style={dropzoneStyle}>
+                                            <input {...getInputProps()} />
+                                            <p>Drag 'n' drop an image here, or click to select a file</p>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+
+                            {hideStatus && (<button
+                                className="btn btn-info"
                                 role="button"
-                                type="button"
-                                onClick={handleSave}
-                            >
-                                SAVE
-                            </button>
-                        </form>
-                    </div>
+                                type="button" onClick={() => setChangeModal(true)}>ย้อนกลับ</button>)}
+                            {image && (
+                                <div>
+                                    <AvatarEditor
+                                        ref={(editor: any) => setEditor(editor)}
+                                        image={image}
+                                        width={200}
+                                        height={200}
+                                        border={50}
+                                        color={[255, 255, 255, 0.6]} // RGBA
+                                        scale={scale}
+                                    />
+                                    <div>
+                                        <label>Zoom:</label>
+                                        <input
+                                            type="range"
+                                            min="1"
+                                            max="3"
+                                            step="0.01"
+                                            value={scale}
+                                            onChange={handleScaleChange}
+                                        />
+                                    </div>
+
+                                    <br />
+                                    <br />
+
+                                    <div className="flex items-center justify-space-evenly gap-8 h-full">
+                                        <button
+                                            className="btn btn-success"
+                                            role="button"
+                                            type="button" onClick={handleSave2}>Save</button>
+                                        <button
+                                            className="btn btn-info"
+                                            role="button"
+                                            type="button" onClick={handleClick}>ย้อนกลับ</button>
+
+                                    </div>
+
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+
                 </div>
-            </dialog></div>
+            </dialog ></div >
     )
 }
